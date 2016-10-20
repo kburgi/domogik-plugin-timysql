@@ -1,0 +1,238 @@
+{
+	"json_version": 2,
+	"identity": {
+		"author": "kbu",
+		"author_email": "kbu at kbulabs dot fr",
+		"tags": ["electricity"],
+		"dependencies": [
+			{
+				"id": "PyMySQL (>=0.7)",
+				"type": "python"
+			}		
+		],
+		"description": "This plugin takes teleinfo data from a mysql database and send them to domogik",
+		"domogik_min_version": "0.4.2",
+		"name": "timysql",
+		"type": "plugin",
+		"version": "0.0"
+	},
+    	"configuration": [
+	    {
+		"default": 30,
+		"description": "Interval between each poll (secondes)",
+		"key": "interval",
+		"name": "Interval",
+		"required": false,
+		"type": "integer"
+	    }
+	],
+    	"commands": {},
+    	"xpl_commands": {},
+    	"sensors": {
+		"timestamp": {
+		    "name": "Rec_timestamp",
+		    "data_type": "DT_Timestamp",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 0,
+			"round_value": 0
+		    }
+		},
+		"recdate":{
+		    "name": "Rec_date",
+		    "data_type": "DT_Date",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 0,
+			"round_value": 0
+		    }
+		},
+		"rectime":{
+		    "name": "Rec_time",
+		    "data_type": "DT_Time",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 0,
+			"round_value": 0
+		    }
+		},        
+		"optarif": {
+		    "name": "optarif",
+		    "data_type": "DT_String",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 0,
+			"round_value": 0
+		    }
+		},
+		"hchp": {
+		    "name": "hchp",
+		    "data_type": "DT_ActiveEnergy",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 0,
+			"round_value": 0
+		    }
+		},
+		"hchc": {
+		    "name": "hchc",
+		    "data_type": "DT_ActiveEnergy",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 0,
+			"round_value": 0
+		    }
+		},        
+		"ptec": {
+		    "name": "ptec",
+		    "data_type": "DT_String",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 0,
+			"round_value": 0
+		    }
+		},
+		"inst1": {
+		    "name": "inst1",
+		    "data_type": "DT_Current",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 0,
+			"round_value": 0
+		    }
+		},
+		"imax1": {
+		    "name": "imax1",
+		    "data_type": "DT_Current",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 0,
+			"round_value": 0
+		    }
+		},   
+		"papp": {
+		    "name": "papp",
+		    "data_type": "DT_ActiveEnergy",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 0,
+			"round_value": 0
+		    }
+		}
+	},
+    	"xpl_stats": {
+		"teleinfo": {
+		    "name": "Teleinfo",
+		    "schema": "teleinfo.basic",
+		    "parameters": {
+			"static": [],
+			"device": [],
+			"dynamic": [
+			    {
+				    "key": "optarif",
+				    "ignore_values": "",
+				    "sensor": "optarif"
+			    },
+			    {
+				    "key": "hchp",
+				    "ignore_values": "",
+				    "sensor": "hchp"
+			    },
+			    {
+				    "key": "hchc",
+				    "ignore_values": "",
+				    "sensor": "hchc"
+			    },
+			    {
+				    "key": "ptec",
+				    "ignore_values": "",
+				    "sensor": "ptec"
+			    },
+			    {
+				    "key": "inst1",
+				    "ignore_values": "",
+				    "sensor": "inst1"
+			    },
+			    {
+				    "key": "imax1",
+				    "ignore_values": "",
+				    "sensor": "imax1"
+			    },
+			    {
+				    "key": "papp",
+				    "ignore_values": "",
+				    "sensor": "papp"
+			    }
+			]
+		    }
+		}	
+	},
+    	"device_types": {
+        	"teleinfo.electric_meter": {
+			"description": "Teleinformation from MySQL database",
+			"id": "teleinfo.electric_meter",
+			"name": "Teleinformation",
+			"commands": [],
+			"sensors": ["timestamp", "recdate", "rectime", "optarif", "hchp", "hchc", "ptec", "inst1", "imax1", "papp"],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each check\n (In my config, Arduino saves data in mysql every 30s...)",
+				    "type": "integer"
+				}
+			    ]
+			}
+
+	}
+}	

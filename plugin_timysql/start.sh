@@ -1,1 +1,1 @@
-export PYTHONPATH=/var/lib/domogik && /usr/bin/python3 bin/timysql.py -f
+export PYTHONPATH=/var/lib/domogik && /usr/bin/python bin/timysql.py -f
