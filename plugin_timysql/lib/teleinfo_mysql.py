@@ -143,9 +143,9 @@ class TeleinfoMysql():
         else:
             #put into a dict
             teleinfo = {}
-            teleinfo["timestamp"] = timestamp
-            teleinfo["recdate"] = rec_date
-            teleinfo["rectime"] = rec_time
+            # teleinfo["timestamp"] = timestamp
+            # teleinfo["recdate"] = rec_date
+            # teleinfo["rectime"] = rec_time
             teleinfo["optarif"] = optarif
             teleinfo["hchp"] = hchp
             teleinfo["hchc"] = hchc

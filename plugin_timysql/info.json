@@ -29,48 +29,6 @@
     	"commands": {},
     	"xpl_commands": {},
     	"sensors": {
-		"timestamp": {
-		    "name": "Rec_timestamp",
-		    "data_type": "DT_Timestamp",
-		    "conversion": "",
-		    "incremental": false,
-		    "timeout": 0,
-		    "history": {
-			"store": true,
-			"duplicate": false,
-			"max": 0,
-			"expire": 0,
-			"round_value": 0
-		    }
-		},
-		"recdate":{
-		    "name": "Rec_date",
-		    "data_type": "DT_Date",
-		    "conversion": "",
-		    "incremental": false,
-		    "timeout": 0,
-		    "history": {
-			"store": true,
-			"duplicate": false,
-			"max": 0,
-			"expire": 0,
-			"round_value": 0
-		    }
-		},
-		"rectime":{
-		    "name": "Rec_time",
-		    "data_type": "DT_Time",
-		    "conversion": "",
-		    "incremental": false,
-		    "timeout": 0,
-		    "history": {
-			"store": true,
-			"duplicate": false,
-			"max": 0,
-			"expire": 0,
-			"round_value": 0
-		    }
-		},        
 		"optarif": {
 		    "name": "optarif",
 		    "data_type": "DT_String",
@@ -79,7 +37,7 @@
 		    "timeout": 0,
 		    "history": {
 			"store": true,
-			"duplicate": false,
+			"duplicate": true,
 			"max": 0,
 			"expire": 0,
 			"round_value": 0
@@ -93,7 +51,7 @@
 		    "timeout": 0,
 		    "history": {
 			"store": true,
-			"duplicate": false,
+			"duplicate": true,
 			"max": 0,
 			"expire": 0,
 			"round_value": 0
@@ -107,7 +65,7 @@
 		    "timeout": 0,
 		    "history": {
 			"store": true,
-			"duplicate": false,
+			"duplicate": true,
 			"max": 0,
 			"expire": 0,
 			"round_value": 0
@@ -121,7 +79,7 @@
 		    "timeout": 0,
 		    "history": {
 			"store": true,
-			"duplicate": false,
+			"duplicate": true,
 			"max": 0,
 			"expire": 0,
 			"round_value": 0
@@ -135,7 +93,7 @@
 		    "timeout": 0,
 		    "history": {
 			"store": true,
-			"duplicate": false,
+			"duplicate": true,
 			"max": 0,
 			"expire": 0,
 			"round_value": 0
@@ -149,7 +107,7 @@
 		    "timeout": 0,
 		    "history": {
 			"store": true,
-			"duplicate": false,
+			"duplicate": true,
 			"max": 0,
 			"expire": 0,
 			"round_value": 0
@@ -163,7 +121,7 @@
 		    "timeout": 0,
 		    "history": {
 			"store": true,
-			"duplicate": false,
+			"duplicate": true,
 			"max": 0,
 			"expire": 0,
 			"round_value": 0
@@ -223,7 +181,7 @@
 			"id": "teleinfo.electric_meter",
 			"name": "Teleinformation",
 			"commands": [],
-			"sensors": ["timestamp", "recdate", "rectime", "optarif", "hchp", "hchc", "ptec", "inst1", "imax1", "papp"],
+			"sensors": ["optarif", "hchp", "hchc", "ptec", "inst1", "imax1", "papp"],
 			"parameters": [
 				{
 				    "key": "interval",
