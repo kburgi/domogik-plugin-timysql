@@ -38,16 +38,6 @@ Implements
 from domogik.xpl.common.xplmessage import XplMessage
 from domogik.xpl.common.plugin import XplPlugin
 
-
-#import os
-#try:
-#        user_paths = os.environ['PYTHONPATH'].split(os.pathsep)
-#except KeyError:
-#        user_paths = []
-#print user_paths
-
-#from domogik_packages.plugin_timysql.lib.teleinfo_mysql import TeleinfoMysql
-#from test.teleinfo_mysql import teleinfomysql
 from domogik_packages.plugin_timysql.lib.teleinfo_mysql import TeleinfoMysql
 
 import threading
@@ -61,22 +51,39 @@ class TimysqlManager(XplPlugin):
         """
         XplPlugin.__init__(self, name='timysql')
 
-        # handle the configuration part
-
         # check if the plugin is configured. If not, this will stop the plugin and log an error
-        #if not self.check_configured():
-        #        return
+        if not self.check_configured():
+            return
         
-
-        #self.devices = self.get_device_list(quit_if_no_device = True)
         self.devices = self.get_device_list(quit_if_no_device = False)
-        #self.log.debug("\n\n")
-        #self.log.debug("self.devices : {}".format(self.devices))
-        #self.log.debug("\n\n")
 
+        mysql_host = self.get_config("mysql_host")
+        if mysql_host == None:
+            self.log.error("Mysql_host seems to be missconfigured ! Check it please ! :-/")
+            return
+
+        mysql_db = self.get_config("mysql_db")
+        if mysql_db == None:
+            self.log.error("Mysql_db seems to be missconfigured ! Check it please ! :-/")
+            return
+       
+        mysql_table = self.get_config("mysql_table")
+        if mysql_table == None:
+            self.log.error("Mysql_db seems to be missconfigured ! Check it please ! :-/")
+            return
+
+        mysql_login = self.get_config("mysql_login")
+        if mysql_login == None:
+            self.log.error("Mysql login seems to be missconfigured ! Check it please ! :-/")
+            return
+
+        mysql_pwd = self.get_config("mysql_pwd")
+        if mysql_pwd == None:
+            self.log.error("Mysql password seems to be missconfigured ! Check it please ! :-/)")
+            return
 
         # link to my lib
-        timysql_manager = TeleinfoMysql(self.log, self.send_xpl, self.get_stop())
+        #timysql_manager = TeleinfoMysql(self.log, self.send_xpl, self.get_stop())
         #timysql_manager.test_callback();
 
         #put a hard interval
@@ -91,14 +98,15 @@ class TimysqlManager(XplPlugin):
                 interval = self.get_parameter(dev, "interval")
                 if interval == None:
                     self.log.error("Interval \"{}\" is invalid for device \"{}\"".format(interval, dev['name']))
-                    break
-                #else:
-                #    print "DEBUG : interval = {}".format(interval)
+                    return
+
+                self._timysql_manager = TeleinfoMysql(self.log, self.send_xpl, self.get_stop(), mysql_host, mysql_db, mysql_table, mysql_login, mysql_pwd )
+                self.add_stop_cb(self._timysql_manager.stop)
 
                 thr_name = "dev_{}".format(dev['id'])
                 self.log.info("[Starting thread {}] Start fetching teleinfo data from mysql for device {}".format(thr_name, dev['name']))
                 threads[thr_name] = threading.Thread(None,
-                                                    timysql_manager.get_last_teleinfo,
+                                                    self._timysql_manager.get_last_teleinfo,
                                                     thr_name,
                                                     (interval,),
                                                     {})

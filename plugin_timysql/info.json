@@ -14,7 +14,7 @@
 		"domogik_min_version": "0.4.2",
 		"name": "timysql",
 		"type": "plugin",
-		"version": "0.0"
+		"version": "0.1alpha"
 	},
     	"configuration": [
 	    {
@@ -24,6 +24,47 @@
 		"name": "Interval",
 		"required": false,
 		"type": "integer"
+	    },
+	    {
+		"default": "localhost",
+		"description":"Mysql host",
+		"key":"mysql_host",
+		"name": "Mysql host",
+		"required":true,
+		"type":"string"
+	    },
+	    {
+		"default":"teleinfo",
+	    	"description":"Mysql database for teleinfo",
+		"key":"mysql_db",
+		"name":"Mysql database",
+		"required":true,
+		"type": "string"    	    
+	    },
+	    {
+		"default":"teleinfo",
+	    	"description":"Mysql table with teleinfo",
+		"key":"mysql_table",
+		"name":"Mysql table",
+		"required":true,
+		"type": "string"    	    
+	    },
+
+	    {
+		"default":"teleinfo_ro",
+		"description":"Mysql username for teleinfo - read only user recommended",
+		"key":"mysql_login",
+		"name":"Mysql login",
+		"required":true,
+		"type":"string"
+	    },
+	    {
+		"default":"teleinforeadonly",
+		"description":"Mysql password for teleinfo",
+		"key":"mysql_pwd",
+		"name":"Mysql password",
+		"required":true,
+		"type":"string"
 	    }
 	],
     	"commands": {},

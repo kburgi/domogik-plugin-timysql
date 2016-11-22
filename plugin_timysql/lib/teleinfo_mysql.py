@@ -16,7 +16,7 @@ except Exception as e:
     
 try:
     import mysqlcfg as mysqlcfg
-except:
+except Exception as e:
     print("--------------------------------------------")
     print("Unable to import mysqlcfg module !!")
     print("=> Check his presence in plugin lib folder ")
@@ -27,25 +27,30 @@ except:
 
 class TeleinfoMysql():
 
-    ### global var ###
-    #db = pymysql.connections.Connection
-    def __init__(self, log, callback, stop):
+    def __init__(self, log, callback, stop, mysql_host, mysql_db, mysql_table, mysql_login, mysql_pwd):
         """ Init TeleinfoMysqlObject
             @param log : log instance
             @param callback : callback
+            @param stop : stop
+            @param mysql_host : mysql hostname (string)
+            @param mysql_db : mysql database name (string)
+            @param mysql_table : mysql table with teleinfo data (string)
+            @param mysql_login : mysql user name (string)
+            @param mysql_pwd : mysql password (string)
         """
-
+        
         #print "Init of class TeleinfoMysql()"
         self.log = log
         self._callback = callback # to send and xpl message
         self._stop = stop
         self.log.info("\n\t\t\t\t\t-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#")
         self.log.info("Init of plugin_\"timysql\"...")
-        self.dbcfg = mysqlcfg.MysqlConnectCfg();                
-        #self.log.info("Testing MySQL connection...")        
+        self.dbcfg =  mysqlcfg.MysqlConnectCfg(mysql_host, mysql_db, mysql_table, mysql_login, mysql_pwd)
+
+        self.log.info("Testing MySQL connection...")        
         self.dbcon = self.mysql_connect()
-        self.dbcon = self.mysql_disconnect()   # I don't keep the connection always open
-        #self.log.info("Testing MySQL connection -> success :-)")
+        self.dbcon = self.mysql_disconnect()
+        self.log.info("Testing MySQL connection -> success :-)")
         self.log.info("Init of plugin \"timysql\" -> completed")
 
     def __del__(self):
@@ -58,6 +63,9 @@ class TeleinfoMysql():
             sys.log.info("Closing plugin_timysql, plugin already disconnected from MySQL")        
         self.log.info("\n\t\t\t\t\t\t-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#\n")
 
+    def stop(self):
+        """ disconnect from mysql when plugin stop """
+       #nothing to do 
 
     def mysql_connect(self):
         """ try to connect to mysql database with given config """
@@ -94,7 +102,7 @@ class TeleinfoMysql():
             self.log.info("Disconnecting from MySQL server -> SUCCESS  :-)")
 
     def fetch_last_teleinfo_line(self):
-        """ Select the last entry in teleinfo table """
+        """ Select the last entry in teleinfo table and return it """
         db_table = self.dbcfg.tablename
         nb_row = "1"
 
@@ -136,7 +144,7 @@ class TeleinfoMysql():
             imax1 = sql_frame[8]
             papp = sql_frame[9]
         except Exception as e:
-            self.log.error("Exception !! Have you tried to change the sql request ???")
+            self.log.error("ERROR !! Have you tried to change the sql request or the sql table ???")
             self.log.error(e)
             #print e
             sys.exit(1)
@@ -155,19 +163,19 @@ class TeleinfoMysql():
             teleinfo["papp"] = papp
             return teleinfo
 
-    def test_callback(self):
-        """ TEST FUNCTION => \"callback\" the last line of mysql entry """
-        self.dbcon = self.mysql_connect()
-        sql_res = self.fetch_last_teleinfo_line()
-        self.dbcon = self.mysql_disconnect()
-        
-        frame = self.sql2dic(sql_res[0])  #only one sql line !!
-        self.log.debug("Current teleinfo frame is :")
-        self.log.debug(frame)
-        self._callback(frame)
+    #def test_callback(self):
+    #    """ TEST FUNCTION => \"callback\" the last line of mysql entry """
+    #    self.dbcon = self.mysql_connect()
+    #    sql_res = self.fetch_last_teleinfo_line()
+    #    self.dbcon = self.mysql_disconnect()
+    #    
+    #    frame = self.sql2dic(sql_res[0])  #only one sql line !!
+    #    self.log.debug("Current teleinfo frame is :")
+    #    self.log.debug(frame)
+    #    self._callback(frame)
 
     def get_last_teleinfo(self, interval):
-        """ get the last teleinfo line in database """ 
+        """ get the last teleinfo line in database and push to xpl msg""" 
         while not self._stop.isSet():
             try:        
                 self.dbcon = self.mysql_connect()

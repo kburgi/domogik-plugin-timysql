@@ -4,12 +4,26 @@
 class MysqlConnectCfg():
     """ Mysql database access config """
 
-    def __init__(self):
-        self._host="localhost"
-        self._login="teleinfo_ro"
-        self._pwd="teleinforeadonly"
-        self._dbname="teleinfo"
-        self._tablename="teleinfo"
+    def __init__(self, mysql_host, mysql_db, mysql_table, mysql_login, mysql_pwd):
+        #self._host="localhost"
+        #self._login="teleinfo_ro"
+        #self._pwd="teleinforeadonly"
+        #self._dbname="teleinfo"
+        #self._tablename="teleinfo"
+
+        if mysql_host == None or \
+            mysql_db == None or \
+            mysql_table == None or \
+            mysql_login == None or \
+            mysql_pwd == None:
+                #print("Error : at least one argument is None")
+                return 1
+
+        self._host=mysql_host
+        self._login=mysql_login
+        self._pwd=mysql_pwd
+        self._dbname=mysql_db
+        self._tablename=mysql_table
 
     def __repr__(self):        
         isDbPwdSet = self._pwd is not ""
