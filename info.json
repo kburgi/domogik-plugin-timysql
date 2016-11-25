@@ -3,7 +3,7 @@
 	"identity": {
 		"author": "kbu",
 		"author_email": "kbu at kbulabs dot fr",
-		"tags": ["electricity"],
+		"tags": ["energy"],
 		"dependencies": [
 			{
 				"id": "PyMySQL (>=0.7)",
